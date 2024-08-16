@@ -41,7 +41,7 @@ const Item: React.FC<ItemProps> = (props) => {
           showCheckbox && "opacity-100 w-8"
         )}
         style={{
-          transition: `opacity 0.15s ${showCheckbox ? "0.1s" : ""}, width 0.15s ${showCheckbox ? "" : "0.1s"}`,
+          transition: `opacity 0.4s ${showCheckbox ? "0.05" : ""}, width 0.15s ${showCheckbox ? "" : "0.05s"}`,
         }}
       >
         <Checkbox
