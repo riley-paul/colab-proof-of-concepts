@@ -31,19 +31,24 @@ const Item: React.FC<ItemProps> = (props) => {
   return (
     <div
       className={cn(
-        "flex items-center space-x-3 text-sm h-8 hover:bg-secondary px-4 border-l-4 border-transparent",
-        !showCheckbox && "pl-0",
-        showCheckbox && isSelected && "border-primary bg-secondary"
+        "flex items-center text-sm h-9 hover:bg-secondary px-2 border-l-4 border-transparent rounded",
+        showCheckbox && isSelected && "border-primary bg-secondary font-semibold rounded-l-none"
       )}
     >
-      <Checkbox
-        checked={isSelected}
-        onCheckedChange={(value) => setIsSelected(Boolean(value))}
+      <div
         className={cn(
-          "opacity-0 w-0 transition-all",
-          showCheckbox && "opacity-100 w-4"
+          "opacity-0 w-0 overflow-hidden ease-in-out flex items-center",
+          showCheckbox && "opacity-100 w-8"
         )}
-      />
+        style={{
+          transition: `opacity 0.15s ${showCheckbox ? "0.1s" : ""}, width 0.15s ${showCheckbox ? "" : "0.1s"}`,
+        }}
+      >
+        <Checkbox
+          checked={isSelected}
+          onCheckedChange={(value) => setIsSelected(Boolean(value))}
+        />
+      </div>
 
       <span>{label}</span>
     </div>
@@ -55,7 +60,7 @@ const Component: React.FC = () => {
   const [selection, setSelection] = React.useState<Set<string>>(new Set());
 
   return (
-    <Card className=" h-1/2 min-w-96">
+    <Card className="h-1/2 max-w-xl w-full">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Checkbox Animation</CardTitle>
