@@ -15,12 +15,13 @@ import { createPortal } from "react-dom";
 import useDraggableState, {
   type DraggableStateClassnames,
 } from "@/hooks/use-draggable-state";
+import { File } from "lucide-react";
+import DriveItemDragOverlay from "./drive-item-drag-overlay";
 
 type Props = {
   item: Item;
   isSelected?: boolean;
   showCheckbox?: boolean;
-  isOverlay?: boolean;
   setIsSelected?: (value: boolean) => void;
 };
 
@@ -30,7 +31,7 @@ const draggableStateClasses: DraggableStateClassnames = {
 };
 
 const DriveItem: React.FC<Props> = (props) => {
-  const { isSelected, showCheckbox, isOverlay, setIsSelected, item } = props;
+  const { isSelected, showCheckbox, setIsSelected, item } = props;
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { setDraggableState, setDraggableIdle, draggableState } =
@@ -91,8 +92,7 @@ const DriveItem: React.FC<Props> = (props) => {
         className={cn(
           "flex items-center text-sm h-10 hover:bg-muted px-3 border border-transparent rounded transition-all ease-out",
           isSelected && "border-primary bg-secondary font-semibold",
-          draggableStateClasses[draggableState.type],
-          isOverlay && "bg-muted/20 min-w-[10rem]"
+          draggableStateClasses[draggableState.type]
         )}
       >
         <div
@@ -107,11 +107,15 @@ const DriveItem: React.FC<Props> = (props) => {
           />
         </div>
 
+        <span className="mr-2">
+          <File className="size-5" />
+        </span>
+
         <span>{item.name}</span>
       </div>
       {draggableState.type === "preview"
         ? createPortal(
-            <DriveItem {...props} isOverlay />,
+            <DriveItemDragOverlay itemName={item.name} selectionCount={4} />,
             draggableState.container
           )
         : null}
