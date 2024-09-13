@@ -6,18 +6,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import React from "react";
 
-const items = [
-  "Item 1",
-  "Item 2",
-  "Item 3",
-  "Item 4",
-  "Item 5",
-  "Item 6",
-  "Item 7",
-  "Item 8",
-  "Item 9",
-  "Item 10",
-];
+const items = Array.from({ length: 30 }, (_, i) => `Item ${i + 1}`);
 
 type ItemProps = {
   label: string;
@@ -31,18 +20,15 @@ const Item: React.FC<ItemProps> = (props) => {
   return (
     <div
       className={cn(
-        "flex items-center text-sm h-9 hover:bg-secondary px-2 border-l-4 border-transparent rounded",
-        showCheckbox && isSelected && "border-primary bg-secondary font-semibold rounded-l-none"
+        "flex items-center text-sm h-10 hover:bg-muted px-3 border-l-4 border-transparent rounded transition-colors ease-out",
+        isSelected && "border-primary bg-secondary font-semibold rounded-l-none"
       )}
     >
       <div
         className={cn(
-          "opacity-0 w-0 overflow-hidden ease-in-out flex items-center",
-          showCheckbox && "opacity-100 w-8"
+          "opacity-0 w-0 shrink-0 overflow-hidden ease-out flex items-center transition-all",
+          showCheckbox && "opacity-100 w-7"
         )}
-        style={{
-          transition: `opacity 0.4s ${showCheckbox ? "0.05" : ""}, width 0.15s ${showCheckbox ? "" : "0.05s"}`,
-        }}
       >
         <Checkbox
           checked={isSelected}
@@ -60,43 +46,46 @@ const Component: React.FC = () => {
   const [selection, setSelection] = React.useState<Set<string>>(new Set());
 
   return (
-    <Card className="h-1/2 max-w-xl w-full">
+    <Card className="max-w-screen-sm w-full p-0">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Checkbox Animation</CardTitle>
-          <Toggle
-            className="h-8 w-8 p-0"
-            variant="outline"
-            pressed={isMultiSelectMode}
-            onPressedChange={(value) => {
-              setSelection(new Set());
-              setIsMultiSelectMode(value);
-            }}
-          >
-            <Check size="1rem" />
-          </Toggle>
+          <div className="flex gap-2 items-center">
+            <span className="text-sm text-muted-foreground">
+              {selection.size} items selected{" "}
+            </span>
+            <Toggle
+              className="h-8 w-8 p-0"
+              variant="outline"
+              pressed={isMultiSelectMode}
+              onPressedChange={(value) => {
+                setSelection(new Set());
+                setIsMultiSelectMode(value);
+              }}
+            >
+              <Check size="1rem" />
+            </Toggle>
+          </div>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="flex flex-col">
-          {items.map((item) => (
-            <Item
-              key={item}
-              label={item}
-              showCheckbox={isMultiSelectMode}
-              isSelected={selection.has(item)}
-              setIsSelected={(value) =>
-                value
-                  ? setSelection((prev) => new Set(prev).add(item))
-                  : setSelection((prev) => {
-                      const next = new Set(prev);
-                      next.delete(item);
-                      return next;
-                    })
-              }
-            />
-          ))}
-        </div>
+      <CardContent className="grid max-h-[30rem] overflow-auto">
+        {items.map((item) => (
+          <Item
+            key={item}
+            label={item}
+            showCheckbox={isMultiSelectMode}
+            isSelected={selection.has(item)}
+            setIsSelected={(value) =>
+              value
+                ? setSelection((prev) => new Set(prev).add(item))
+                : setSelection((prev) => {
+                    const next = new Set(prev);
+                    next.delete(item);
+                    return next;
+                  })
+            }
+          />
+        ))}
       </CardContent>
     </Card>
   );
