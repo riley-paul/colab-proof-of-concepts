@@ -11,13 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as CheckboxAnimationImport } from './routes/checkbox-animation'
+import { Route as DriveItemsImport } from './routes/drive-items'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const CheckboxAnimationRoute = CheckboxAnimationImport.update({
-  path: '/checkbox-animation',
+const DriveItemsRoute = DriveItemsImport.update({
+  path: '/drive-items',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -37,11 +37,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/checkbox-animation': {
-      id: '/checkbox-animation'
-      path: '/checkbox-animation'
-      fullPath: '/checkbox-animation'
-      preLoaderRoute: typeof CheckboxAnimationImport
+    '/drive-items': {
+      id: '/drive-items'
+      path: '/drive-items'
+      fullPath: '/drive-items'
+      preLoaderRoute: typeof DriveItemsImport
       parentRoute: typeof rootRoute
     }
   }
@@ -49,10 +49,7 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  CheckboxAnimationRoute,
-})
+export const routeTree = rootRoute.addChildren({ IndexRoute, DriveItemsRoute })
 
 /* prettier-ignore-end */
 
@@ -63,14 +60,14 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/checkbox-animation"
+        "/drive-items"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/checkbox-animation": {
-      "filePath": "checkbox-animation.tsx"
+    "/drive-items": {
+      "filePath": "drive-items.tsx"
     }
   }
 }

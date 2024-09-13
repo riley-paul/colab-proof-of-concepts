@@ -52,7 +52,7 @@ const Component: React.FC = () => {
     <Card className="max-w-screen-sm w-full p-0">
       <CardHeader className={cn("transitional-all", isScrolled && "border-b")}>
         <div className="flex items-center justify-between">
-          <CardTitle>Checkbox Animation</CardTitle>
+          <CardTitle>Drive Items</CardTitle>
           <div className="flex gap-3 items-center">
             <span className="text-sm text-muted-foreground">
               {selection.size} items selected
@@ -94,6 +94,6 @@ const Component: React.FC = () => {
   );
 };
 
-export const Route = createFileRoute("/checkbox-animation")({
+export const Route = createFileRoute("/drive-items")({
   component: Component,
 });
