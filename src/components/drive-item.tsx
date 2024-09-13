@@ -136,7 +136,7 @@ const DriveItem: React.FC<Props> = (props) => {
         ? createPortal(
             <DriveItemDragOverlay
               itemName={item.name}
-              selectionCount={selectedItemIds.size}
+              selectionCount={Math.max(selectedItemIds.size, 1)}
             />,
             draggableState.container,
           )
