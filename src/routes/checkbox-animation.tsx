@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@/components/ui/toggle";
+import useScrollShadow from "@/hooks/use-scroll-shadow";
 import { cn } from "@/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
@@ -45,14 +46,16 @@ const Component: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
   const [selection, setSelection] = React.useState<Set<string>>(new Set());
 
+  const { listRef, isScrolled } = useScrollShadow();
+
   return (
     <Card className="max-w-screen-sm w-full p-0">
-      <CardHeader>
+      <CardHeader className={cn("transitional-all", isScrolled && "border-b")}>
         <div className="flex items-center justify-between">
           <CardTitle>Checkbox Animation</CardTitle>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-3 items-center">
             <span className="text-sm text-muted-foreground">
-              {selection.size} items selected{" "}
+              {selection.size} items selected
             </span>
             <Toggle
               className="h-8 w-8 p-0"
@@ -68,7 +71,7 @@ const Component: React.FC = () => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="grid max-h-[30rem] overflow-auto">
+      <CardContent ref={listRef} className="grid max-h-[30rem] overflow-auto">
         {items.map((item) => (
           <Item
             key={item}
