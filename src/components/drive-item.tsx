@@ -20,7 +20,10 @@ import DriveItemDragOverlay from "./drive-item-drag-overlay";
 
 type Props = {
   item: Item;
+  selectedItemIds: Set<string>;
   isSelected?: boolean;
+  setIsDragging?: (value: boolean) => void;
+  isDragging?: boolean;
   showCheckbox?: boolean;
   setIsSelected?: (value: boolean) => void;
 };
@@ -31,7 +34,15 @@ const draggableStateClasses: DraggableStateClassnames = {
 };
 
 const DriveItem: React.FC<Props> = (props) => {
-  const { isSelected, showCheckbox, setIsSelected, item } = props;
+  const {
+    isSelected,
+    isDragging,
+    setIsDragging,
+    selectedItemIds,
+    showCheckbox,
+    setIsSelected,
+    item,
+  } = props;
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { setDraggableState, setDraggableIdle, draggableState } =
@@ -46,6 +57,7 @@ const DriveItem: React.FC<Props> = (props) => {
         element,
         onDragStart: () => {
           setDraggableState({ type: "is-dragging" });
+          setIsDragging?.(true);
         },
         onGenerateDragPreview({ nativeSetDragImage }) {
           setCustomNativeDragPreview({
@@ -61,6 +73,7 @@ const DriveItem: React.FC<Props> = (props) => {
         },
         onDrop: () => {
           setDraggableIdle();
+          setIsDragging?.(false);
         },
       }),
       dropTargetForElements({
@@ -69,6 +82,11 @@ const DriveItem: React.FC<Props> = (props) => {
           if (source.element === element) {
             return false;
           }
+
+          if (isSelected) {
+            return false;
+          }
+
           return true;
         },
         getIsSticky: () => true,
@@ -81,7 +99,7 @@ const DriveItem: React.FC<Props> = (props) => {
         onDrop: () => {
           setDraggableIdle();
         },
-      })
+      }),
     );
   });
 
@@ -90,15 +108,16 @@ const DriveItem: React.FC<Props> = (props) => {
       <div
         ref={ref}
         className={cn(
-          "flex items-center text-sm h-10 hover:bg-muted px-3 border border-transparent rounded transition-all ease-out",
+          "flex h-10 items-center rounded border border-transparent px-3 text-sm transition-all ease-out hover:bg-muted",
           isSelected && "border-primary bg-secondary font-semibold",
-          draggableStateClasses[draggableState.type]
+          draggableStateClasses[draggableState.type],
+          isSelected && isDragging && "opacity-40",
         )}
       >
         <div
           className={cn(
-            "opacity-0 w-0 shrink-0 overflow-hidden ease-out flex items-center transition-all",
-            showCheckbox && "opacity-100 w-7"
+            "flex w-0 shrink-0 items-center overflow-hidden opacity-0 transition-all ease-out",
+            showCheckbox && "w-7 opacity-100",
           )}
         >
           <Checkbox
@@ -115,8 +134,11 @@ const DriveItem: React.FC<Props> = (props) => {
       </div>
       {draggableState.type === "preview"
         ? createPortal(
-            <DriveItemDragOverlay itemName={item.name} selectionCount={4} />,
-            draggableState.container
+            <DriveItemDragOverlay
+              itemName={item.name}
+              selectionCount={selectedItemIds.size}
+            />,
+            draggableState.container,
           )
         : null}
     </>

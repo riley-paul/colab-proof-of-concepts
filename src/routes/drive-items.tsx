@@ -12,16 +12,17 @@ const items = generateItems(50, "root");
 
 const Component: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
+  const [isDragging, setIsDragging] = React.useState(false);
   const [selection, setSelection] = React.useState<Set<string>>(new Set());
 
   const { listRef, isScrolled } = useScrollShadow();
 
   return (
-    <Card className="max-w-screen-sm w-full p-0">
+    <Card className="w-full max-w-screen-sm p-0">
       <CardHeader className={cn("transitional-all", isScrolled && "border-b")}>
         <div className="flex items-center justify-between">
           <CardTitle>Drive Items</CardTitle>
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">
               {selection.size} items selected
             </span>
@@ -44,6 +45,9 @@ const Component: React.FC = () => {
           <DriveItem
             key={item.id}
             item={item}
+            isDragging={isDragging}
+            setIsDragging={setIsDragging}
+            selectedItemIds={selection}
             showCheckbox={isMultiSelectMode}
             isSelected={selection.has(item.id)}
             setIsSelected={(value) =>
