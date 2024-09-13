@@ -1,46 +1,14 @@
+import DriveItem from "@/components/drive-item";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
+import { generateItems } from "@/lib/helpers";
 import { cn } from "@/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import React from "react";
 
-const items = Array.from({ length: 30 }, (_, i) => `Item ${i + 1}`);
-
-type ItemProps = {
-  label: string;
-  showCheckbox?: boolean;
-  isSelected: boolean;
-  setIsSelected: (value: boolean) => void;
-};
-
-const Item: React.FC<ItemProps> = (props) => {
-  const { label, showCheckbox, isSelected, setIsSelected } = props;
-  return (
-    <div
-      className={cn(
-        "flex items-center text-sm h-10 hover:bg-muted px-3 border-l-4 border-transparent rounded transition-colors ease-out",
-        isSelected && "border-primary bg-secondary font-semibold rounded-l-none"
-      )}
-    >
-      <div
-        className={cn(
-          "opacity-0 w-0 shrink-0 overflow-hidden ease-out flex items-center transition-all",
-          showCheckbox && "opacity-100 w-7"
-        )}
-      >
-        <Checkbox
-          checked={isSelected}
-          onCheckedChange={(value) => setIsSelected(Boolean(value))}
-        />
-      </div>
-
-      <span>{label}</span>
-    </div>
-  );
-};
+const items = generateItems(50, "root");
 
 const Component: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
@@ -73,17 +41,17 @@ const Component: React.FC = () => {
       </CardHeader>
       <CardContent ref={listRef} className="grid max-h-[30rem] overflow-auto">
         {items.map((item) => (
-          <Item
-            key={item}
-            label={item}
+          <DriveItem
+            key={item.id}
+            item={item}
             showCheckbox={isMultiSelectMode}
-            isSelected={selection.has(item)}
+            isSelected={selection.has(item.id)}
             setIsSelected={(value) =>
               value
-                ? setSelection((prev) => new Set(prev).add(item))
+                ? setSelection((prev) => new Set(prev).add(item.id))
                 : setSelection((prev) => {
                     const next = new Set(prev);
-                    next.delete(item);
+                    next.delete(item.id);
                     return next;
                   })
             }
