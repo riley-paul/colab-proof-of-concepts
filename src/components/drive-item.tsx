@@ -113,6 +113,7 @@ const DriveItem: React.FC<Props> = (props) => {
     <>
       <div
         ref={ref}
+        data-id={item.id}
         className={cn(
           "flex h-10 items-center rounded-md border border-transparent px-3 text-sm transition-all ease-out hover:bg-muted",
           isSelected && "border-primary bg-secondary font-semibold",

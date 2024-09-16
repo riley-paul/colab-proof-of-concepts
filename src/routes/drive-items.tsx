@@ -8,7 +8,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import React from "react";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
 import { ItemSchema } from "@/lib/types";
+import { flushSync } from "react-dom";
 
 const Component: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
@@ -40,14 +42,21 @@ const Component: React.FC = () => {
         const parentId = targetData.data.id;
         const sourceId = sourceData.data.id;
 
-        console.log("updating items");
-        setItems((prev) =>
-          prev.map((item) =>
-            selection.has(item.id) || sourceId === item.id
-              ? { ...item, parentId }
-              : item,
-          ),
-        );
+        flushSync(() => {
+          console.log("updating items");
+          setItems((prev) =>
+            prev.map((item) =>
+              selection.has(item.id) || sourceId === item.id
+                ? { ...item, parentId }
+                : item,
+            ),
+          );
+        });
+
+        const element = document.querySelector(`[data-id="${sourceId}"]`);
+        if (element instanceof HTMLElement) {
+          triggerPostMoveFlash(element);
+        }
       },
     });
   }, [selection]);
