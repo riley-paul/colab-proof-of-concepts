@@ -8,9 +8,9 @@ const DriveItemDragOverlay: React.FC<Props> = (props) => {
 
   return (
     <div className="relative">
-      <div className="z-10 flex h-10 min-w-32 items-center rounded border bg-card px-2 text-sm font-medium">
-        <File className="mr-2 size-5" />
-        <span>{itemName}</span>
+      <div className="z-10 flex h-10 min-w-32 max-w-60 items-center gap-2 rounded border bg-card px-2 text-sm font-medium">
+        <File className="mr-2 size-5 shrink-0" />
+        <span className="truncate">{itemName}</span>
         <span className="flex flex-1 justify-end">
           <div className="flex size-5 items-center justify-center rounded-full bg-primary">
             {selectionCount}
@@ -18,7 +18,7 @@ const DriveItemDragOverlay: React.FC<Props> = (props) => {
         </span>
       </div>
       {selectionCount > 1 && (
-        <div className="absolute -bottom-1 -right-1 -z-10 flex h-10 w-32 items-center rounded border bg-card px-2 text-sm font-medium"></div>
+        <div className="absolute -bottom-1 -right-1 -z-10 flex h-10 w-full items-center rounded border bg-card px-2 text-sm font-medium"></div>
       )}
     </div>
   );
