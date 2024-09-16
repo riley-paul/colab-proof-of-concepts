@@ -7,10 +7,15 @@ import { cn } from "@/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import React from "react";
-import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import {
+  dropTargetForElements,
+  monitorForElements,
+} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
-import { ItemSchema } from "@/lib/types";
+import { DroppableAreaSchema } from "@/lib/types";
 import { flushSync } from "react-dom";
+import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
+import invariant from "tiny-invariant";
 
 const Component: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
@@ -28,41 +33,75 @@ const Component: React.FC = () => {
     return flatItems;
   }, [items]);
 
+  const [isDragOver, setIsDragOver] = React.useState(false);
+
   React.useEffect(() => {
-    return monitorForElements({
-      onDrop: ({ location, source }) => {
-        const target = location.current.dropTargets[0];
-        if (!target) return;
+    const element = listRef.current;
+    invariant(element);
 
-        const sourceData = ItemSchema.safeParse(source.data);
-        const targetData = ItemSchema.safeParse(target.data);
+    return combine(
+      monitorForElements({
+        onDrop: ({ location, source }) => {
+          const target = location.current.dropTargets[0];
+          if (!target) return;
 
-        if (!targetData.success || !sourceData.success) return;
+          const sourceData = DroppableAreaSchema.safeParse(source.data);
+          const targetData = DroppableAreaSchema.safeParse(target.data);
 
-        const parentId = targetData.data.id;
-        const sourceId = sourceData.data.id;
+          if (!targetData.success || !sourceData.success) return;
 
-        flushSync(() => {
-          console.log("updating items");
-          setItems((prev) =>
-            prev.map((item) =>
-              selection.has(item.id) || sourceId === item.id
-                ? { ...item, parentId }
-                : item,
-            ),
-          );
-        });
+          const parentId = targetData.data.id;
+          const sourceId = sourceData.data.id;
 
-        const element = document.querySelector(`[data-id="${sourceId}"]`);
-        if (element instanceof HTMLElement) {
-          triggerPostMoveFlash(element);
-        }
-      },
-    });
-  }, [selection]);
+          if (parentId === sourceId) return;
+
+          if (parentId === null) {
+            console.log("dropped on root");
+          }
+
+          flushSync(() => {
+            console.log("updating items");
+            setItems((prev) =>
+              prev.map((item) =>
+                selection.has(item.id) || sourceId === item.id
+                  ? { ...item, parentId }
+                  : item,
+              ),
+            );
+            setSelection(new Set());
+          });
+
+          const element = document.querySelector(`[data-id="${sourceId}"]`);
+          if (element instanceof HTMLElement) {
+            triggerPostMoveFlash(element);
+          }
+        },
+      }),
+      dropTargetForElements({
+        element,
+        getData: () => {
+          return { id: null };
+        },
+        onDragEnter: () => {
+          setIsDragOver(true);
+        },
+        onDragLeave: () => {
+          setIsDragOver(false);
+        },
+        onDrop: () => {
+          setIsDragOver(false);
+        },
+      }),
+    );
+  }, [listRef, selection]);
 
   return (
-    <Card className="w-full max-w-screen-sm p-0">
+    <Card
+      className={cn(
+        "w-full max-w-screen-sm p-0 transition-colors",
+        isDragOver && "border-primary",
+      )}
+    >
       <CardHeader className={cn("transitional-all", isScrolled && "border-b")}>
         <div className="flex items-center justify-between">
           <CardTitle>Drive Items</CardTitle>

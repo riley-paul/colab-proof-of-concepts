@@ -95,7 +95,6 @@ const DriveItem: React.FC<Props> = (props) => {
         getData: () => {
           return item;
         },
-        getIsSticky: () => true,
         onDragEnter: () => {
           setDraggableState({ type: "is-dragging-over", closestEdge: null });
         },
@@ -107,7 +106,7 @@ const DriveItem: React.FC<Props> = (props) => {
         },
       }),
     );
-  });
+  }, [isSelected, item, setDraggableIdle, setDraggableState, setIsDragging]);
 
   return (
     <>
