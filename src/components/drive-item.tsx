@@ -1,4 +1,4 @@
-import type { Item } from "@/lib/types";
+import type { FlatItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
@@ -19,7 +19,7 @@ import { File } from "lucide-react";
 import DriveItemDragOverlay from "./drive-item-drag-overlay";
 
 type Props = {
-  item: Item;
+  item: FlatItem;
   selectedItemIds: Set<string>;
   isSelected?: boolean;
   setIsDragging?: (value: boolean) => void;
@@ -55,6 +55,9 @@ const DriveItem: React.FC<Props> = (props) => {
     return combine(
       draggable({
         element,
+        getInitialData: () => {
+          return item;
+        },
         onDragStart: () => {
           setDraggableState({ type: "is-dragging" });
           setIsDragging?.(true);
@@ -89,6 +92,9 @@ const DriveItem: React.FC<Props> = (props) => {
 
           return true;
         },
+        getData: () => {
+          return item;
+        },
         getIsSticky: () => true,
         onDragEnter: () => {
           setDraggableState({ type: "is-dragging-over", closestEdge: null });
@@ -108,7 +114,7 @@ const DriveItem: React.FC<Props> = (props) => {
       <div
         ref={ref}
         className={cn(
-          "flex h-10 items-center rounded border border-transparent px-3 text-sm transition-all ease-out hover:bg-muted",
+          "flex h-10 items-center rounded-md border border-transparent px-3 text-sm transition-all ease-out hover:bg-muted",
           isSelected && "border-primary bg-secondary font-semibold",
           draggableStateClasses[draggableState.type],
           isSelected && isDragging && "opacity-40",
@@ -126,7 +132,10 @@ const DriveItem: React.FC<Props> = (props) => {
           />
         </div>
 
-        <span className="mr-2">
+        <span
+          className="mr-2"
+          style={{ paddingLeft: `${item.depth * 1.5}rem` }}
+        >
           <File className="size-5" />
         </span>
 

@@ -2,20 +2,55 @@ import DriveItem from "@/components/drive-item";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
-import { generateItems } from "@/lib/helpers";
+import { buildTree, flattenTree, generateItems } from "@/lib/helpers";
 import { cn } from "@/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import React from "react";
-
-const items = generateItems(50, "root");
+import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { ItemSchema } from "@/lib/types";
 
 const Component: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
+
   const [selection, setSelection] = React.useState<Set<string>>(new Set());
 
+  const [items, setItems] = React.useState(() => generateItems(50));
+
   const { listRef, isScrolled } = useScrollShadow();
+
+  const flatItems = React.useMemo(() => {
+    const tree = buildTree(items);
+    const flatItems = flattenTree(tree);
+    return flatItems;
+  }, [items]);
+
+  React.useEffect(() => {
+    return monitorForElements({
+      onDrop: ({ location, source }) => {
+        const target = location.current.dropTargets[0];
+        if (!target) return;
+
+        const sourceData = ItemSchema.safeParse(source.data);
+        const targetData = ItemSchema.safeParse(target.data);
+
+        if (!targetData.success || !sourceData.success) return;
+
+        const parentId = targetData.data.id;
+        const sourceId = sourceData.data.id;
+
+        console.log("updating items");
+        setItems((prev) =>
+          prev.map((item) =>
+            selection.has(item.id) || sourceId === item.id
+              ? { ...item, parentId }
+              : item,
+          ),
+        );
+      },
+    });
+  }, [selection]);
 
   return (
     <Card className="w-full max-w-screen-sm p-0">
@@ -41,7 +76,7 @@ const Component: React.FC = () => {
         </div>
       </CardHeader>
       <CardContent ref={listRef} className="grid max-h-[30rem] overflow-auto">
-        {items.map((item) => (
+        {flatItems.map((item) => (
           <DriveItem
             key={item.id}
             item={item}
