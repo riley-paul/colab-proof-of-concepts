@@ -20,12 +20,14 @@ import { DroppableAreaSchema } from "@/lib/types";
 import { flushSync } from "react-dom";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import invariant from "tiny-invariant";
+import useSelection from "@/hooks/use-selection";
 
 const DriveItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
 
-  const [selection, setSelection] = React.useState<Set<string>>(new Set());
+  const { selection, clearSelection, select, toggleSelection } =
+    useSelection<string>();
 
   const [items, setItems] = React.useState(() => generateItems(50));
 
@@ -72,7 +74,7 @@ const DriveItems: React.FC = () => {
                   : item,
               ),
             );
-            setSelection(new Set());
+            clearSelection();
           });
 
           const element = document.querySelector(`[data-id="${sourceId}"]`);
@@ -81,21 +83,21 @@ const DriveItems: React.FC = () => {
           }
         },
       }),
-      dropTargetForElements({
-        element,
-        getData: () => {
-          return { id: null };
-        },
-        onDragEnter: () => {
-          setIsDragOver(true);
-        },
-        onDragLeave: () => {
-          setIsDragOver(false);
-        },
-        onDrop: () => {
-          setIsDragOver(false);
-        },
-      }),
+      // dropTargetForElements({
+      //   element,
+      //   getData: () => {
+      //     return { id: null };
+      //   },
+      //   onDragEnter: () => {
+      //     setIsDragOver(true);
+      //   },
+      //   onDragLeave: () => {
+      //     setIsDragOver(false);
+      //   },
+      //   onDrop: () => {
+      //     setIsDragOver(false);
+      //   },
+      // }),
     );
   }, [listRef, selection]);
 
@@ -117,7 +119,7 @@ const DriveItems: React.FC = () => {
               className="h-8 w-8 p-0"
               pressed={isMultiSelectMode}
               onPressedChange={(value) => {
-                setSelection(new Set());
+                if (!value) clearSelection();
                 setIsMultiSelectMode(value);
               }}
             >
@@ -141,15 +143,7 @@ const DriveItems: React.FC = () => {
             selectedItemIds={selection}
             showCheckbox={isMultiSelectMode}
             isSelected={selection.has(item.id)}
-            setIsSelected={(value) =>
-              value
-                ? setSelection((prev) => new Set(prev).add(item.id))
-                : setSelection((prev) => {
-                    const next = new Set(prev);
-                    next.delete(item.id);
-                    return next;
-                  })
-            }
+            select={isMultiSelectMode ? toggleSelection : select}
           />
         ))}
       </CardContent>

@@ -24,7 +24,7 @@ type Props = {
   setIsDragging?: (value: boolean) => void;
   isDragging?: boolean;
   showCheckbox?: boolean;
-  setIsSelected?: (value: boolean) => void;
+  select?: (value: string) => void;
 };
 
 const draggableStateClasses: DraggableStateClassnames = {
@@ -39,7 +39,7 @@ const DriveItem: React.FC<Props> = (props) => {
     setIsDragging,
     selectedItemIds,
     showCheckbox,
-    setIsSelected,
+    select,
     item,
   } = props;
   const ref = React.useRef<HTMLDivElement>(null);
@@ -122,6 +122,7 @@ const DriveItem: React.FC<Props> = (props) => {
           draggableStateClasses[draggableState.type],
           isSelected && isDragging && "opacity-40",
         )}
+        onClick={() => select?.(item.id)}
       >
         <div
           className={cn(
@@ -131,7 +132,6 @@ const DriveItem: React.FC<Props> = (props) => {
         >
           <Checkbox
             checked={isSelected}
-            onCheckedChange={(value) => setIsSelected?.(Boolean(value))}
           />
         </div>
 
