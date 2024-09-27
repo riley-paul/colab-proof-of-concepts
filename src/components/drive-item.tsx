@@ -144,7 +144,10 @@ const DriveItem: React.FC<Props> = (props) => {
           className="mr-2"
           style={{ paddingLeft: `${item.depth * 1.5}rem` }}
         >
-          <i className="fa-solid fa-file text-lg" />
+          <i
+            className="fa-solid fa-file text-lg"
+            style={{ color: item.color }}
+          />
         </span>
 
         <span>{item.name}</span>

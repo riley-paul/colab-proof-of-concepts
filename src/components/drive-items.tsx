@@ -21,6 +21,7 @@ import { flushSync } from "react-dom";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import invariant from "tiny-invariant";
 import useSelection from "@/hooks/use-selection";
+import { useEventListener } from "usehooks-ts";
 
 const DriveItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
@@ -40,6 +41,13 @@ const DriveItems: React.FC = () => {
   }, [items]);
 
   const [isDragOver, setIsDragOver] = React.useState(false);
+
+  useEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      clearSelection();
+      setIsMultiSelectMode(false);
+    }
+  });
 
   React.useEffect(() => {
     const element = listRef.current;

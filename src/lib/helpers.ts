@@ -1,5 +1,6 @@
 import type { FlatItem, Item } from "./types";
 import { v4 as uuid } from "uuid";
+import { faker } from "@faker-js/faker";
 
 export const generateItems = (count: number): Item[] => {
   const ids = Array.from({ length: count }, () => uuid());
@@ -8,7 +9,8 @@ export const generateItems = (count: number): Item[] => {
     return {
       id,
       parentId: Math.random() > 0.5 || parentId === id ? null : parentId,
-      name: `Item ${id}`,
+      name: faker.lorem.words(),
+      color: faker.color.rgb(),
     };
   });
 
