@@ -1,5 +1,11 @@
 import DriveItem from "@/components/drive-item";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
 import { buildTree, flattenTree, generateItems } from "@/lib/helpers";
@@ -94,12 +100,15 @@ const DriveItems: React.FC = () => {
   }, [listRef, selection]);
 
   return (
-    <Card
-      className={cn("p-0 transition-colors", isDragOver && "border-primary")}
-    >
-      <CardHeader className={cn("transitional-all border-b border-transparent", isScrolled && "border-border")}>
+    <Card className={cn(isDragOver && "border-primary")}>
+      <CardHeader
+        className={cn(
+          "transitional-colors border-b border-transparent ease-in-out",
+          isScrolled && "border-border",
+        )}
+      >
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl">Drive</CardTitle>
+          <CardTitle className="text-2xl font-bold">Drive</CardTitle>
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">
               {selection.size} items selected
@@ -117,7 +126,9 @@ const DriveItems: React.FC = () => {
           </div>
         </div>
         <CardDescription>
-          Mockup of Drive using Pragmatic Drag and Drop library
+          Mockup of Drive using Pragmatic Drag and Drop library. Try dragging an
+          item onto another item to change it's parent, or move multiple items
+          at a time using multi-select mode.
         </CardDescription>
       </CardHeader>
       <CardContent ref={listRef} className="grid max-h-[30rem] overflow-auto">
