@@ -116,6 +116,7 @@ const DriveItems: React.FC = () => {
               {selection.size} items selected
             </span>
             <Toggle
+              title="Multi-select mode"
               className="h-8 w-8 p-0"
               pressed={isMultiSelectMode}
               onPressedChange={(value) => {
@@ -123,7 +124,7 @@ const DriveItems: React.FC = () => {
                 setIsMultiSelectMode(value);
               }}
             >
-              <i className="fa-solid fa-square-check text-lg" />
+              <i className="fa-solid fa-check-double text-lg" />
             </Toggle>
           </div>
         </div>

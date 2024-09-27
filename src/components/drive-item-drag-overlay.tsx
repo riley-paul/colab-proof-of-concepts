@@ -11,7 +11,7 @@ const DriveItemDragOverlay: React.FC<Props> = (props) => {
         <i className="fa-solid fa-file text-lg shrink-0 w-4 text-center" />
         <span className="truncate">{itemName}</span>
         <span className="flex flex-1 justify-end">
-          <div className="flex size-5 items-center justify-center rounded-full bg-primary">
+          <div className="flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
             {selectionCount}
           </div>
         </span>
