@@ -96,10 +96,6 @@ const DriveItem: React.FC<Props> = (props) => {
             return false;
           }
 
-          if (source.data.parentId === item.id) {
-            return false;
-          }
-
           return true;
         },
         getData: () => {
