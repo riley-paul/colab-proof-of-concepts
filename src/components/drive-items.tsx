@@ -26,7 +26,7 @@ const DriveItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
 
-  const { selection, clearSelection, select, toggleSelection } =
+  const { selection, clearSelection, select, toggleSelection, selectLast } =
     useSelection<string>();
 
   const [items, setItems] = React.useState(() => generateItems(50));
@@ -120,7 +120,7 @@ const DriveItems: React.FC = () => {
               className="h-8 w-8 p-0"
               pressed={isMultiSelectMode}
               onPressedChange={(value) => {
-                if (!value) clearSelection();
+                selectLast();
                 setIsMultiSelectMode(value);
               }}
             >
@@ -134,7 +134,10 @@ const DriveItems: React.FC = () => {
           at a time using multi-select mode.
         </CardDescription>
       </CardHeader>
-      <CardContent ref={listRef} className="grid max-h-[30rem] overflow-auto">
+      <CardContent
+        ref={listRef}
+        className="grid max-h-[30rem] overflow-auto px-3"
+      >
         {flatItems.map((item) => (
           <DriveItem
             key={item.id}

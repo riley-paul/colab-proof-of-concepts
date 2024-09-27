@@ -54,6 +54,12 @@ const DriveItem: React.FC<Props> = (props) => {
     return combine(
       draggable({
         element,
+        canDrag: () => {
+          if (showCheckbox && !isSelected) {
+            return false;
+          }
+          return true;
+        },
         getInitialData: () => {
           return item;
         },
@@ -130,9 +136,7 @@ const DriveItem: React.FC<Props> = (props) => {
             showCheckbox && "w-7 opacity-100",
           )}
         >
-          <Checkbox
-            checked={isSelected}
-          />
+          <Checkbox checked={isSelected} />
         </div>
 
         <span
