@@ -15,7 +15,6 @@ import { createPortal } from "react-dom";
 import useDraggableState, {
   type DraggableStateClassnames,
 } from "@/hooks/use-draggable-state";
-import { File } from "lucide-react";
 import DriveItemDragOverlay from "./drive-item-drag-overlay";
 
 type Props = {
@@ -140,7 +139,7 @@ const DriveItem: React.FC<Props> = (props) => {
           className="mr-2"
           style={{ paddingLeft: `${item.depth * 1.5}rem` }}
         >
-          <File className="size-5" />
+          <i className="fa-solid fa-file text-lg" />
         </span>
 
         <span>{item.name}</span>

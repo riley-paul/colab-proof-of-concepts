@@ -1,5 +1,9 @@
 ---
 import "@/globals.css";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+
+const isHome = Astro.url.pathname === "/";
 ---
 
 <html lang="en">
@@ -9,13 +13,27 @@ import "@/globals.css";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
-		<link href="/fontawesome/css/fontawesome.css" rel="stylesheet" />
-		<link href="/fontawesome/css/brands.css" rel="stylesheet" />
-		<link href="/fontawesome/css/solid.css" rel="stylesheet" />
+    <link href="/fontawesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="/fontawesome/css/brands.css" rel="stylesheet" />
+    <link href="/fontawesome/css/solid.css" rel="stylesheet" />
 
     <title>Astro</title>
   </head>
   <body>
+    {
+      !isHome && (
+        <a
+          href="/"
+          class={cn(
+            "fixed top-4 left-4",
+            buttonVariants({ variant: "secondary" })
+          )}
+        >
+          <i class="fa-solid fa-arrow-left mr-2" />
+          <span>Home</span>
+        </a>
+      )
+    }
     <slot />
   </body>
 </html>

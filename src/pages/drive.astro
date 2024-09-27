@@ -4,5 +4,7 @@ import RootLayout from "@/layouts/root-layout.astro";
 ---
 
 <RootLayout>
-  <DriveItems client:load />
+  <div class="grid items-center container2">
+    <DriveItems client:only />
+  </div>
 </RootLayout>

@@ -1,10 +1,9 @@
 import DriveItem from "@/components/drive-item";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
 import { buildTree, flattenTree, generateItems } from "@/lib/helpers";
 import { cn } from "@/lib/utils";
-import { Check } from "lucide-react";
 import React from "react";
 import {
   dropTargetForElements,
@@ -96,31 +95,30 @@ const DriveItems: React.FC = () => {
 
   return (
     <Card
-      className={cn(
-        "w-full max-w-screen-sm p-0 transition-colors",
-        isDragOver && "border-primary",
-      )}
+      className={cn("p-0 transition-colors", isDragOver && "border-primary")}
     >
-      <CardHeader className={cn("transitional-all", isScrolled && "border-b")}>
+      <CardHeader className={cn("transitional-all border-b border-transparent", isScrolled && "border-border")}>
         <div className="flex items-center justify-between">
-          <CardTitle>Drive Items</CardTitle>
+          <CardTitle className="text-xl">Drive</CardTitle>
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">
               {selection.size} items selected
             </span>
             <Toggle
               className="h-8 w-8 p-0"
-              variant="outline"
               pressed={isMultiSelectMode}
               onPressedChange={(value) => {
                 setSelection(new Set());
                 setIsMultiSelectMode(value);
               }}
             >
-              <Check size="1rem" />
+              <i className="fa-solid fa-square-check text-lg" />
             </Toggle>
           </div>
         </div>
+        <CardDescription>
+          Mockup of Drive using Pragmatic Drag and Drop library
+        </CardDescription>
       </CardHeader>
       <CardContent ref={listRef} className="grid max-h-[30rem] overflow-auto">
         {flatItems.map((item) => (
