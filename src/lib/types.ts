@@ -16,3 +16,5 @@ export type Item = z.infer<typeof ItemSchema>;
 export type FlatItem = Item & {
   depth: number;
 };
+
+export type ItemTree = Map<string | null, Item[]>;

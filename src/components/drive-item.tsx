@@ -1,4 +1,4 @@
-import type { FlatItem } from "@/lib/types";
+import type { FlatItem, ItemTree } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
@@ -16,13 +16,16 @@ import useDraggableState, {
   type DraggableStateClassnames,
 } from "@/hooks/use-draggable-state";
 import DriveItemDragOverlay from "./drive-item-drag-overlay";
+import { isChildOf } from "@/lib/helpers";
 
 type Props = {
   item: FlatItem;
+  tree: ItemTree;
   selectedItemIds: Set<string>;
   isSelected?: boolean;
   setIsDragging?: (value: boolean) => void;
   isDragging?: boolean;
+  isChildOfSelected?: boolean;
   showCheckbox?: boolean;
   select?: (value: string) => void;
 };
@@ -39,7 +42,9 @@ const DriveItem: React.FC<Props> = (props) => {
     setIsDragging,
     selectedItemIds,
     showCheckbox,
+    isChildOfSelected,
     select,
+    tree,
     item,
   } = props;
   const ref = React.useRef<HTMLDivElement>(null);
@@ -124,6 +129,7 @@ const DriveItem: React.FC<Props> = (props) => {
           isSelected && "border-primary bg-secondary font-semibold",
           draggableStateClasses[draggableState.type],
           isSelected && isDragging && "opacity-40",
+          isChildOfSelected && "bg-red-500",
         )}
         onClick={() => select?.(item.id)}
       >

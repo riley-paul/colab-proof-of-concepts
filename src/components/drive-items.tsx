@@ -8,7 +8,12 @@ import {
 } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
-import { buildTree, flattenTree, generateItems } from "@/lib/helpers";
+import {
+  buildTree,
+  flattenTree,
+  generateItems,
+  isChildOf,
+} from "@/lib/helpers";
 import { cn } from "@/lib/utils";
 import React from "react";
 import {
@@ -34,11 +39,12 @@ const DriveItems: React.FC = () => {
 
   const { listRef, isScrolled } = useScrollShadow();
 
+  const tree = React.useMemo(() => buildTree(items), [items]);
+  console.log(tree);
   const flatItems = React.useMemo(() => {
-    const tree = buildTree(items);
     const flatItems = flattenTree(tree);
     return flatItems;
-  }, [items]);
+  }, [tree]);
 
   const [isDragOver, setIsDragOver] = React.useState(false);
 
@@ -156,6 +162,7 @@ const DriveItems: React.FC = () => {
             showCheckbox={isMultiSelectMode}
             isSelected={selection.has(item.id)}
             select={isMultiSelectMode ? toggleSelection : select}
+            tree={tree}
           />
         ))}
       </CardContent>
