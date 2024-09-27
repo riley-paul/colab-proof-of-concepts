@@ -64,6 +64,7 @@ const DriveItem: React.FC<Props> = (props) => {
           return item;
         },
         onDragStart: () => {
+          select?.(item.id);
           setDraggableState({ type: "is-dragging" });
           setIsDragging?.(true);
         },
