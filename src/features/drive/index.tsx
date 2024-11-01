@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
-import { isMultiSelectModeAtom, selectionAtom } from "./drive-pragmatic/store";
+import { isMultiSelectModeAtom, selectionAtom } from "./store";
 import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
 import useSelection from "@/hooks/use-selection";

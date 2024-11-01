@@ -21,7 +21,7 @@ import {
   isItemDraggingAtom,
   isMultiSelectModeAtom,
   selectionAtom,
-} from "./store";
+} from "../store";
 import useSelection from "@/hooks/use-selection";
 
 type Props = {

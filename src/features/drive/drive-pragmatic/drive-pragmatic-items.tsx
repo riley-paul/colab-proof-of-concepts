@@ -10,7 +10,7 @@ import invariant from "tiny-invariant";
 import useSelection from "@/hooks/use-selection";
 import { useEventListener } from "usehooks-ts";
 import { useAtom } from "jotai";
-import { isMultiSelectModeAtom, selectionAtom } from "./store";
+import { isMultiSelectModeAtom, selectionAtom } from "../store";
 
 const DrivePragmaticItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = useAtom(
