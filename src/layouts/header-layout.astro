@@ -32,10 +32,12 @@ const links = [
             href={link.href}
             class={cn(
               buttonVariants({
-                variant: Astro.url.pathname === link.href ? "default" : "ghost",
+                variant:
+                  Astro.url.pathname === link.href
+                    ? "default"
+                    : "invertedGhost",
                 size: "sm",
-              }),
-              "hover:bg-gray-800 hover:text-gray-50"
+              })
             )}
           >
             <i class={cn(link.icon, "mr-2 text-sm")} />
