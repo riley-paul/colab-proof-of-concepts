@@ -16,6 +16,7 @@
     "@atlaskit/pragmatic-drag-and-drop": "^1.3.1",
     "@atlaskit/pragmatic-drag-and-drop-flourish": "^1.1.2",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
+    "@fontsource-variable/inter": "^5.1.0",
     "@fontsource-variable/radio-canada": "^5.1.0",
     "@fontsource-variable/reddit-sans": "^5.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",

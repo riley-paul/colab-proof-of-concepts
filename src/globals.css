@@ -6,7 +6,7 @@
   :root {
     color-scheme: light;
 
-    --background: 0 0% 100%;
+    --background: 228 100% 99%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -33,7 +33,7 @@
     --chart-5: 27 87% 67%;
   }
 
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       color-scheme: dark;
 
@@ -68,7 +68,7 @@
   
       --ring: 225 96% 78%;
     }
-  }
+  } */
 }
 
 @layer base {
