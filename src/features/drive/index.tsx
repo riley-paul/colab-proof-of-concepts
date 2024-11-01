@@ -37,9 +37,12 @@ const DriveDemo: React.FC = () => {
           )}
         >
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold">Drive</CardTitle>
+            <CardTitle className="text-2xl font-bold">
+              <i className="fa-solid fa-hdd mr-3" />
+              <span>Drive</span>
+            </CardTitle>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs text-muted-foreground">
                 {selection.size} items selected
               </span>
               <Tooltip>

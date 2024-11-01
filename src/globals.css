@@ -80,6 +80,6 @@
   }
 
   .container2 {
-    @apply mx-auto min-h-screen w-full max-w-screen-md px-4;
+    @apply mx-auto w-full max-w-screen-md px-4;
   }
 }

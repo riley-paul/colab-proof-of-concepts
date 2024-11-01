@@ -1,10 +1,10 @@
 ---
-import RootLayout from "@/layouts/root-layout.astro";
 import DriveDemo from "@/features/drive";
+import HeaderLayout from "@/layouts/header-layout.astro";
 ---
 
-<RootLayout>
-  <div class="grid items-center container2">
+<HeaderLayout>
+  <div class="grid items-center container2 min-h-[80vh]">
     <DriveDemo client:only />
   </div>
-</RootLayout>
+</HeaderLayout>
