@@ -26,7 +26,7 @@ const DrivePragmaticItems: React.FC = () => {
   const { selection, clearSelection, select, toggleSelection } =
     useSelection(selectionAtom);
 
-  const [items, setItems] = React.useState(() => generateItems(1000));
+  const [items, setItems] = React.useState(() => generateItems(500));
   const ref = React.useRef<HTMLDivElement>(null);
 
   const tree = React.useMemo(() => buildTree(items), [items]);

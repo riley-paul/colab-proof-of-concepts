@@ -45,7 +45,6 @@ const DriveDemo: React.FC = () => {
               <Tooltip>
                 <TooltipTrigger>
                   <Toggle
-                    title="Multi-select mode"
                     className="h-8 w-8 p-0"
                     pressed={isMultiSelectMode}
                     onPressedChange={(value) => {
