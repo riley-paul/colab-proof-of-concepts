@@ -27,6 +27,7 @@ import useSelection from "@/hooks/use-selection";
 type Props = {
   item: FlatItem;
   select?: (value: string) => void;
+  isChildOfSelected?: boolean;
 };
 
 const draggableStateClasses: DraggableStateClassnames = {
@@ -35,7 +36,7 @@ const draggableStateClasses: DraggableStateClassnames = {
 };
 
 const DrivePragmaticItem: React.FC<Props> = (props) => {
-  const { select, item } = props;
+  const { select, item, isChildOfSelected } = props;
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { setDraggableState, setDraggableIdle, draggableState } =
@@ -123,6 +124,7 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
           isSelected(item.id) && "border-primary bg-secondary font-semibold",
           draggableStateClasses[draggableState.type],
           isSelected(item.id) && isDragging && "opacity-40",
+          isChildOfSelected && showCheckbox && "bg-secondary/80",
         )}
         onClick={() => select?.(item.id)}
       >

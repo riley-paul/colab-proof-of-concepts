@@ -62,7 +62,6 @@ export const isChildOf = (
 
   // Find the parent of the child using the child’s parentId
   const parentItems = itemTree.get(parentId);
-  console.log(parentItems);
   if (!parentItems) return false;
 
   // Recursively check if the parent of the child is a child of the given parentId
