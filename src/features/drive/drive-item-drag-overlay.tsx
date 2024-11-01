@@ -1,19 +1,17 @@
+import { Badge } from "@/components/ui/badge";
 import React from "react";
 
-type Props = { itemName: string; selectionCount: number };
-
-const DriveItemDragOverlay: React.FC<Props> = (props) => {
-  const { itemName, selectionCount } = props;
-
+const DriveItemDragOverlay: React.FC<{
+  itemName: string;
+  selectionCount: number;
+}> = ({ itemName, selectionCount }) => {
   return (
     <div className="relative">
-      <div className="z-10 flex h-10 min-w-32 max-w-60 items-center gap-2 rounded border bg-card px-2 text-sm font-medium">
-        <i className="fa-solid fa-file text-lg shrink-0 w-4 text-center text-muted-foreground" />
+      <div className="z-10 flex h-10 min-w-32 max-w-60 items-center gap-2 rounded-md border bg-card px-2 text-sm font-medium">
+        <i className="fa-solid fa-file w-4 shrink-0 text-center text-lg text-muted-foreground" />
         <span className="truncate">{itemName}</span>
         <span className="flex flex-1 justify-end">
-          <div className="flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            {selectionCount}
-          </div>
+          <Badge className="rounded-full px-2">{selectionCount}</Badge>
         </span>
       </div>
       {selectionCount > 1 && (
