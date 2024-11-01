@@ -1,4 +1,4 @@
-import type { FlatItem, ItemTree } from "@/lib/types";
+import type { FlatItem } from "@/features/drive/types";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
@@ -21,12 +21,11 @@ import {
   isItemDraggingAtom,
   isMultiSelectModeAtom,
   selectionAtom,
-} from "../store";
+} from "../../store";
 import useSelection from "@/hooks/use-selection";
 
 type Props = {
   item: FlatItem;
-  tree: ItemTree;
   select?: (value: string) => void;
 };
 
@@ -36,7 +35,7 @@ const draggableStateClasses: DraggableStateClassnames = {
 };
 
 const DrivePragmaticItem: React.FC<Props> = (props) => {
-  const { select, tree, item } = props;
+  const { select, item } = props;
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { setDraggableState, setDraggableIdle, draggableState } =

@@ -1,4 +1,4 @@
-import type { FlatItem, Item, ItemTree } from "./types";
+import type { FlatItem, Item, ItemTree } from "@/features/drive/types";
 import { v4 as uuid } from "uuid";
 import { faker } from "@faker-js/faker";
 
@@ -62,12 +62,12 @@ export const isChildOf = (
 
   // Find the parent of the child using the child’s parentId
   const parentItems = itemTree.get(parentId);
-  console.log(parentItems)
+  console.log(parentItems);
   if (!parentItems) return false;
 
   // Recursively check if the parent of the child is a child of the given parentId
   const parentItem = parentItems.find((item) => item.id === child.parentId);
-  console.log(parentItem)
+  console.log(parentItem);
 
   // If the immediate parent exists, recursively check if it is a child of the given parentId
   if (parentItem) {

@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import React from "react";
-import DrivePragmaticItems from "./drive-pragmatic/drive-pragmatic-items";
+import DrivePragmaticItems from "./components/drive-pragmatic/drive-pragmatic-items";
 import {
   Card,
   CardContent,

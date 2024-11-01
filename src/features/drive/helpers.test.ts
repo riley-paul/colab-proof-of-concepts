@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { isChildOf, buildTree } from "./helpers"; // Adjust import paths as needed
-import type { Item } from "./types";
+import type { Item } from "@/features/drive/types";
 
 describe("isChildOf", () => {
   const items: Item[] = [
