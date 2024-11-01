@@ -29,6 +29,11 @@ import useSelection from "@/hooks/use-selection";
 import { useEventListener } from "usehooks-ts";
 import { useAtom } from "jotai";
 import { isMultiSelectModeAtom } from "./store";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const DrivePragmaticItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = useAtom(
@@ -131,17 +136,24 @@ const DrivePragmaticItems: React.FC = () => {
             <span className="text-sm text-muted-foreground">
               {selection.size} items selected
             </span>
-            <Toggle
-              title="Multi-select mode"
-              className="h-8 w-8 p-0"
-              pressed={isMultiSelectMode}
-              onPressedChange={(value) => {
-                selectLast();
-                setIsMultiSelectMode(value);
-              }}
-            >
-              <i className="fa-solid fa-check-double text-lg" />
-            </Toggle>
+            <Tooltip>
+              <TooltipTrigger>
+                <Toggle
+                  title="Multi-select mode"
+                  className="h-8 w-8 p-0"
+                  pressed={isMultiSelectMode}
+                  onPressedChange={(value) => {
+                    selectLast();
+                    setIsMultiSelectMode(value);
+                  }}
+                >
+                  <i className="fa-solid fa-check-double text-lg" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Toggle multi-select mode</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
         <CardDescription>
