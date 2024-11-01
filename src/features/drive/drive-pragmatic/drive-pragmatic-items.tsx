@@ -30,7 +30,6 @@ import { useEventListener } from "usehooks-ts";
 
 const DrivePragmaticItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
-  const [isDragging, setIsDragging] = React.useState(false);
 
   const { selection, clearSelection, select, toggleSelection, selectLast } =
     useSelection<string>();
@@ -156,8 +155,6 @@ const DrivePragmaticItems: React.FC = () => {
           <DrivePragmaticItem
             key={item.id}
             item={item}
-            isDragging={isDragging}
-            setIsDragging={setIsDragging}
             selectedItemIds={selection}
             showCheckbox={isMultiSelectMode}
             isSelected={selection.has(item.id)}

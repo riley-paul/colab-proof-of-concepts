@@ -17,14 +17,14 @@ import useDraggableState, {
 } from "@/hooks/use-draggable-state";
 import DriveItemDragOverlay from "../drive-item-drag-overlay";
 import { isChildOf } from "@/lib/helpers";
+import { useAtom } from "jotai";
+import { isPragmaticItemDragging } from "./store";
 
 type Props = {
   item: FlatItem;
   tree: ItemTree;
   selectedItemIds: Set<string>;
   isSelected?: boolean;
-  setIsDragging?: (value: boolean) => void;
-  isDragging?: boolean;
   isChildOfSelected?: boolean;
   showCheckbox?: boolean;
   select?: (value: string) => void;
@@ -38,8 +38,6 @@ const draggableStateClasses: DraggableStateClassnames = {
 const DrivePragmaticItem: React.FC<Props> = (props) => {
   const {
     isSelected,
-    isDragging,
-    setIsDragging,
     selectedItemIds,
     showCheckbox,
     isChildOfSelected,
@@ -51,6 +49,8 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
 
   const { setDraggableState, setDraggableIdle, draggableState } =
     useDraggableState();
+
+  const [isDragging, setIsDragging] = useAtom(isPragmaticItemDragging);
 
   React.useEffect(() => {
     const element = ref.current;
