@@ -15,7 +15,7 @@ import { createPortal } from "react-dom";
 import useDraggableState, {
   type DraggableStateClassnames,
 } from "@/hooks/use-draggable-state";
-import DriveItemDragOverlay from "./drive-item-drag-overlay";
+import DriveItemDragOverlay from "../drive/drive-item-drag-overlay";
 import { isChildOf } from "@/lib/helpers";
 
 type Props = {
@@ -35,7 +35,7 @@ const draggableStateClasses: DraggableStateClassnames = {
   "is-dragging-over": "border-primary border-dashed",
 };
 
-const DriveItem: React.FC<Props> = (props) => {
+const DrivePragmaticItem: React.FC<Props> = (props) => {
   const {
     isSelected,
     isDragging,
@@ -167,4 +167,4 @@ const DriveItem: React.FC<Props> = (props) => {
   );
 };
 
-export default DriveItem;
+export default DrivePragmaticItem;

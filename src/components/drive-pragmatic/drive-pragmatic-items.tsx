@@ -1,4 +1,4 @@
-import DriveItem from "@/components/drive-pragmatic/drive-item";
+import DrivePragmaticItem from "@/components/drive-pragmatic/drive-pragmatic-item";
 import {
   Card,
   CardContent,
@@ -28,7 +28,7 @@ import invariant from "tiny-invariant";
 import useSelection from "@/hooks/use-selection";
 import { useEventListener } from "usehooks-ts";
 
-const DriveItems: React.FC = () => {
+const DrivePragmaticItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
 
@@ -153,7 +153,7 @@ const DriveItems: React.FC = () => {
         className="grid max-h-[30rem] overflow-auto px-3"
       >
         {flatItems.map((item) => (
-          <DriveItem
+          <DrivePragmaticItem
             key={item.id}
             item={item}
             isDragging={isDragging}
@@ -170,4 +170,4 @@ const DriveItems: React.FC = () => {
   );
 };
 
-export default DriveItems;
+export default DrivePragmaticItems;
