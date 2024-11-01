@@ -1,7 +1,8 @@
+import { useAtom, type PrimitiveAtom } from "jotai";
 import React from "react";
 
-export default function useSelection<T>() {
-  const [selection, setSelection] = React.useState<Set<T>>(new Set());
+export default function useSelection<T>(atom: PrimitiveAtom<Set<T>>) {
+  const [selection, setSelection] = useAtom<Set<T>>(atom);
   const [lastSelected, setLastSelected] = React.useState<T | null>(null);
 
   const toggleSelection = (id: T | T[]) => {

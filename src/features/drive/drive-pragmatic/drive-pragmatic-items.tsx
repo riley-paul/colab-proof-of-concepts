@@ -1,25 +1,7 @@
 import DrivePragmaticItem from "@/features/drive/drive-pragmatic/drive-pragmatic-item";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Toggle } from "@/components/ui/toggle";
-import useScrollShadow from "@/hooks/use-scroll-shadow";
-import {
-  buildTree,
-  flattenTree,
-  generateItems,
-  isChildOf,
-} from "@/lib/helpers";
-import { cn } from "@/lib/utils";
+import { buildTree, flattenTree, generateItems } from "@/lib/helpers";
 import React from "react";
-import {
-  dropTargetForElements,
-  monitorForElements,
-} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
 import { DroppableAreaSchema } from "@/lib/types";
 import { flushSync } from "react-dom";
@@ -28,25 +10,18 @@ import invariant from "tiny-invariant";
 import useSelection from "@/hooks/use-selection";
 import { useEventListener } from "usehooks-ts";
 import { useAtom } from "jotai";
-import { isMultiSelectModeAtom } from "./store";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { isMultiSelectModeAtom, selectionAtom } from "./store";
 
 const DrivePragmaticItems: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = useAtom(
     isMultiSelectModeAtom,
   );
-  const [isDragOver, setIsDragOver] = React.useState(false);
 
-  const { selection, clearSelection, select, toggleSelection, selectLast } =
-    useSelection<string>();
+  const { selection, clearSelection, select, toggleSelection } =
+    useSelection<string>(selectionAtom);
 
   const [items, setItems] = React.useState(() => generateItems(50));
-
-  const { listRef, isScrolled } = useScrollShadow();
+  const ref = React.useRef<HTMLDivElement>(null);
 
   const tree = React.useMemo(() => buildTree(items), [items]);
   console.log(tree);
@@ -63,7 +38,7 @@ const DrivePragmaticItems: React.FC = () => {
   });
 
   React.useEffect(() => {
-    const element = listRef.current;
+    const element = ref.current;
     invariant(element);
 
     return combine(
@@ -104,80 +79,20 @@ const DrivePragmaticItems: React.FC = () => {
           }
         },
       }),
-      // dropTargetForElements({
-      //   element,
-      //   getData: () => {
-      //     return { id: null };
-      //   },
-      //   onDragEnter: () => {
-      //     setIsDragOver(true);
-      //   },
-      //   onDragLeave: () => {
-      //     setIsDragOver(false);
-      //   },
-      //   onDrop: () => {
-      //     setIsDragOver(false);
-      //   },
-      // }),
     );
-  }, [listRef, selection]);
+  }, [ref, selection]);
 
   return (
-    <Card className={cn(isDragOver && "border-primary")}>
-      <CardHeader
-        className={cn(
-          "transitional-colors border-b border-transparent ease-in-out",
-          isScrolled && "border-border",
-        )}
-      >
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold">Drive</CardTitle>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">
-              {selection.size} items selected
-            </span>
-            <Tooltip>
-              <TooltipTrigger>
-                <Toggle
-                  title="Multi-select mode"
-                  className="h-8 w-8 p-0"
-                  pressed={isMultiSelectMode}
-                  onPressedChange={(value) => {
-                    selectLast();
-                    setIsMultiSelectMode(value);
-                  }}
-                >
-                  <i className="fa-solid fa-check-double text-lg" />
-                </Toggle>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>Toggle multi-select mode</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </div>
-        <CardDescription>
-          Mockup of Drive using Pragmatic Drag and Drop library. Try dragging an
-          item onto another item to change it's parent, or move multiple items
-          at a time using multi-select mode.
-        </CardDescription>
-      </CardHeader>
-      <CardContent
-        ref={listRef}
-        className="grid max-h-[30rem] overflow-auto px-3"
-      >
-        {flatItems.map((item) => (
-          <DrivePragmaticItem
-            key={item.id}
-            item={item}
-            selectedItemIds={selection}
-            isSelected={selection.has(item.id)}
-            select={isMultiSelectMode ? toggleSelection : select}
-            tree={tree}
-          />
-        ))}
-      </CardContent>
-    </Card>
+    <div ref={ref} className="grid">
+      {flatItems.map((item) => (
+        <DrivePragmaticItem
+          key={item.id}
+          item={item}
+          select={isMultiSelectMode ? toggleSelection : select}
+          tree={tree}
+        />
+      ))}
+    </div>
   );
 };
 

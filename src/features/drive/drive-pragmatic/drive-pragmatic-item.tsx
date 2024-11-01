@@ -16,16 +16,17 @@ import useDraggableState, {
   type DraggableStateClassnames,
 } from "@/hooks/use-draggable-state";
 import DriveItemDragOverlay from "../drive-item-drag-overlay";
-import { isChildOf } from "@/lib/helpers";
 import { useAtom, useAtomValue } from "jotai";
-import { isItemDraggingAtom, isMultiSelectModeAtom } from "./store";
+import {
+  isItemDraggingAtom,
+  isMultiSelectModeAtom,
+  selectionAtom,
+} from "./store";
+import useSelection from "@/hooks/use-selection";
 
 type Props = {
   item: FlatItem;
   tree: ItemTree;
-  selectedItemIds: Set<string>;
-  isSelected?: boolean;
-  isChildOfSelected?: boolean;
   select?: (value: string) => void;
 };
 
@@ -35,8 +36,7 @@ const draggableStateClasses: DraggableStateClassnames = {
 };
 
 const DrivePragmaticItem: React.FC<Props> = (props) => {
-  const { isSelected, selectedItemIds, isChildOfSelected, select, tree, item } =
-    props;
+  const { select, tree, item } = props;
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { setDraggableState, setDraggableIdle, draggableState } =
@@ -44,6 +44,8 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
 
   const [isDragging, setIsDragging] = useAtom(isItemDraggingAtom);
   const showCheckbox = useAtomValue(isMultiSelectModeAtom);
+
+  const { selection, isSelected } = useSelection(selectionAtom);
 
   React.useEffect(() => {
     const element = ref.current;
@@ -53,7 +55,7 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
       draggable({
         element,
         canDrag: () => {
-          if (showCheckbox && !isSelected) {
+          if (showCheckbox && !isSelected(item.id)) {
             return false;
           }
           return true;
@@ -90,7 +92,7 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
             return false;
           }
 
-          if (isSelected) {
+          if (isSelected(item.id)) {
             return false;
           }
 
@@ -119,10 +121,9 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
         data-id={item.id}
         className={cn(
           "flex h-10 items-center rounded-md border border-transparent px-3 text-sm transition-all ease-out hover:bg-muted",
-          isSelected && "border-primary bg-secondary font-semibold",
+          isSelected(item.id) && "border-primary bg-secondary font-semibold",
           draggableStateClasses[draggableState.type],
-          isSelected && isDragging && "opacity-40",
-          isChildOfSelected && "bg-red-500",
+          isSelected(item.id) && isDragging && "opacity-40",
         )}
         onClick={() => select?.(item.id)}
       >
@@ -132,7 +133,7 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
             showCheckbox && "w-7 opacity-100",
           )}
         >
-          <Checkbox checked={isSelected} />
+          <Checkbox checked={isSelected(item.id)} />
         </div>
 
         <span
@@ -151,7 +152,7 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
         ? createPortal(
             <DriveItemDragOverlay
               itemName={item.name}
-              selectionCount={Math.max(selectedItemIds.size, 1)}
+              selectionCount={Math.max(selection.size, 1)}
             />,
             draggableState.container,
           )
