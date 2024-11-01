@@ -1,4 +1,4 @@
-import DrivePragmaticItem from "@/components/drive-pragmatic/drive-pragmatic-item";
+import DrivePragmaticItem from "@/features/drive/drive-pragmatic/drive-pragmatic-item";
 import {
   Card,
   CardContent,

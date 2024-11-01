@@ -15,7 +15,7 @@ import { createPortal } from "react-dom";
 import useDraggableState, {
   type DraggableStateClassnames,
 } from "@/hooks/use-draggable-state";
-import DriveItemDragOverlay from "../drive/drive-item-drag-overlay";
+import DriveItemDragOverlay from "../drive-item-drag-overlay";
 import { isChildOf } from "@/lib/helpers";
 
 type Props = {
