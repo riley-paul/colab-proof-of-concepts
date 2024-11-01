@@ -27,9 +27,14 @@ import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import invariant from "tiny-invariant";
 import useSelection from "@/hooks/use-selection";
 import { useEventListener } from "usehooks-ts";
+import { useAtom } from "jotai";
+import { isMultiSelectModeAtom } from "./store";
 
 const DrivePragmaticItems: React.FC = () => {
-  const [isMultiSelectMode, setIsMultiSelectMode] = React.useState(false);
+  const [isMultiSelectMode, setIsMultiSelectMode] = useAtom(
+    isMultiSelectModeAtom,
+  );
+  const [isDragOver, setIsDragOver] = React.useState(false);
 
   const { selection, clearSelection, select, toggleSelection, selectLast } =
     useSelection<string>();
@@ -44,8 +49,6 @@ const DrivePragmaticItems: React.FC = () => {
     const flatItems = flattenTree(tree);
     return flatItems;
   }, [tree]);
-
-  const [isDragOver, setIsDragOver] = React.useState(false);
 
   useEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -156,7 +159,6 @@ const DrivePragmaticItems: React.FC = () => {
             key={item.id}
             item={item}
             selectedItemIds={selection}
-            showCheckbox={isMultiSelectMode}
             isSelected={selection.has(item.id)}
             select={isMultiSelectMode ? toggleSelection : select}
             tree={tree}

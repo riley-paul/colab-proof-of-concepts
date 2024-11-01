@@ -1,4 +1,4 @@
 import { atom } from "jotai";
 
-export const isPragmaticItemDragging = atom(false);
-
+export const isItemDraggingAtom = atom(false);
+export const isMultiSelectModeAtom = atom(false);
