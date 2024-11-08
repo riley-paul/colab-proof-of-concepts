@@ -15,7 +15,7 @@ const DriveItemDragOverlay: React.FC<{
         </span>
       </div>
       {selectionCount > 1 && (
-        <div className="absolute -bottom-1 -right-1 -z-10 flex h-10 w-full items-center rounded border bg-card px-2 text-sm font-medium"></div>
+        <div className="absolute -bottom-1 -right-1 -z-10 h-10 w-full rounded border bg-card" />
       )}
     </div>
   );
