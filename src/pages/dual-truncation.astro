@@ -1,0 +1,76 @@
+---
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import RootLayout from "@/layouts/root-layout.astro";
+
+const data = [
+  {
+    name: "Lorem ipsum",
+    value: "ipsum dolor sit amet consectetur adipisicing elit",
+  },
+  {
+    name: "Lorem",
+    value:
+      "ipsum dolor sit amet consectetur adipisicing elit. Sequi ea, quibusdam soluta illum dolor dicta rem ducimus",
+  },
+  {
+    name: "ipsum dolor sit amet consectetur adipisicing elit. Sequi ea, quibusdam soluta illum dolor dicta rem ducimus",
+    value: "Lorem",
+  },
+];
+---
+
+<RootLayout>
+  <div class="bg-blue-200 h-screen w-full flex items-center justify-center">
+    <div class="flex flex-col gap-12 items-center border p-12 border-red-500">
+      <Card>
+        <CardHeader>
+          <CardTitle>Dual Truncation</CardTitle>
+          <CardDescription> Max width set on secondary badge </CardDescription>
+        </CardHeader>
+        <CardContent className="max-w-screen-sm w-full flex flex-col divide-y">
+          {
+            data.map((item) => (
+              <div class="flex items-center gap-2 py-2">
+                <Badge variant="default" className="min-w-0">
+                  <span class="truncate">{item.name}</span>
+                </Badge>
+                <Badge variant="secondary" className="min-w-0 max-w-md">
+                  <span class="truncate">{item.value}</span>
+                </Badge>
+              </div>
+            ))
+          }
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Dual Truncation</CardTitle>
+          <CardDescription>
+            No max widths set - primary badge is needlessly truncated
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="max-w-screen-sm w-full flex flex-col divide-y">
+          {
+            data.map((item) => (
+              <div class="flex items-center gap-2 py-2">
+                <Badge variant="default" className="min-w-0">
+                  <span class="truncate">{item.name}</span>
+                </Badge>
+                <Badge variant="secondary" className="min-w-0">
+                  <span class="truncate">{item.value}</span>
+                </Badge>
+              </div>
+            ))
+          }
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</RootLayout>
