@@ -1,0 +1,25 @@
+---
+import RootLayout from "@/layouts/root-layout.astro";
+import { cn } from "@/lib/utils";
+
+const baseClasses =
+  "bg-black text-white rounded-md p-2 text-sm max-w-screen-sm";
+---
+
+<RootLayout>
+  <div
+    class="relative h-screen bg-cyan-400 w-full flex flex-col gap-6 items-center justify-center"
+  >
+    <div class={cn(baseClasses)}>Loremipsumdolorsitametconsecteturadipi</div>
+    <div class={cn(baseClasses)}>
+      Loremipsumdolorsitametconsecteturadipi
+      idsuntnonullamcommodiImpediteummolestiasassumendamagniquasaccusantium
+      delectusmolestiaeeiusveritatisametipsasdkfja
+    </div>
+    <div class={cn(baseClasses, "inline-block break-normal hyphens-auto")}>
+      Loremipsumdolorsitametconsecteturadipi
+      idsuntnonullamcommodiImpediteummolestiasassumendamagniquasaccusantium
+      delectusmolestiaeeiusveritatisametipsasdkfja
+    </div>
+  </div>
+</RootLayout>
