@@ -8,6 +8,10 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
+      boxShadow: {
+        "inset-top": "inset 0 4px 6px rgba(0, 0, 0, 0.1)", // Custom shadow
+        "inset-bottom": "inset 0 -4px 6px rgba(0, 0, 0, 0.1)", // Custom shadow
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
