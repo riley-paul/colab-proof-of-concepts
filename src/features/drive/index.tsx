@@ -1,9 +1,3 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import React from "react";
 import DrivePragmaticItems from "./components/drive-pragmatic/drive-pragmatic-items";
 import {
@@ -16,9 +10,10 @@ import {
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { isMultiSelectModeAtom, selectionAtom } from "./store";
-import { Toggle } from "@/components/ui/toggle";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
 import useSelection from "@/hooks/use-selection";
+import { IconButton, Tooltip } from "@radix-ui/themes";
+import RadixProvider from "@/components/radix-provider";
 
 const DriveDemo: React.FC = () => {
   const [isMultiSelectMode, setIsMultiSelectMode] = useAtom(
@@ -28,7 +23,7 @@ const DriveDemo: React.FC = () => {
   const { selection, selectLast } = useSelection(selectionAtom);
 
   return (
-    <TooltipProvider>
+    <RadixProvider>
       <Card>
         <CardHeader
           className={cn(
@@ -45,22 +40,16 @@ const DriveDemo: React.FC = () => {
               <span className="text-xs text-muted-foreground">
                 {selection.size} items selected
               </span>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Toggle
-                    className="h-8 w-8 p-0"
-                    pressed={isMultiSelectMode}
-                    onPressedChange={(value) => {
-                      selectLast();
-                      setIsMultiSelectMode(value);
-                    }}
-                  >
-                    <i className="fa-solid fa-check-double text-lg" />
-                  </Toggle>
-                </TooltipTrigger>
-                <TooltipContent side="right">
-                  <p>Toggle multi-select mode</p>
-                </TooltipContent>
+              <Tooltip content="Toggle multi-select mode" side="right">
+                <IconButton
+                  variant={isMultiSelectMode ? "solid" : "soft"}
+                  onClick={() => {
+                    selectLast();
+                    setIsMultiSelectMode((prev) => !prev);
+                  }}
+                >
+                  <i className="fa-solid fa-check-double text-lg" />
+                </IconButton>
               </Tooltip>
             </div>
           </div>
@@ -77,7 +66,7 @@ const DriveDemo: React.FC = () => {
           <DrivePragmaticItems />
         </CardContent>
       </Card>
-    </TooltipProvider>
+    </RadixProvider>
   );
 };
 
