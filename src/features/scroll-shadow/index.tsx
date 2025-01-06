@@ -1,6 +1,6 @@
 import useScrollShadow2 from "@/hooks/use-scroll-shadow-2";
 import { cn } from "@/lib/utils";
-import { Switch, Text } from "@radix-ui/themes";
+import { Card, Inset, Switch, Text } from "@radix-ui/themes";
 import React from "react";
 
 const ScrollShadowDemo: React.FC = () => {
@@ -17,37 +17,37 @@ const ScrollShadowDemo: React.FC = () => {
   }, [topOverflowing, bottomOverflowing]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-sky-100">
-      <div className="grid w-full max-w-screen-sm gap-2">
-        <Text
-          as="label"
-          className="flex items-center gap-2"
-          size="2"
-          weight="medium"
-        >
-          <Switch checked={isOverflowing} onCheckedChange={setIsOverflowing} />
-          Overflowing list
-        </Text>
-        <div
+    <div className="grid w-full max-w-screen-sm gap-2">
+      <Text
+        as="label"
+        className="flex items-center gap-2"
+        size="2"
+        weight="medium"
+      >
+        <Switch checked={isOverflowing} onCheckedChange={setIsOverflowing} />
+        Overflowing list
+      </Text>
+      <Card>
+        <Inset
           ref={listRef}
           className={cn(
-            "relative h-[40rem] overflow-auto rounded-lg border-sky-600 bg-card shadow-md",
+            "relative h-[40rem] overflow-auto",
             topOverflowing && "border-t-4",
             bottomOverflowing && "border-b-4",
           )}
         >
-          <div className="mx-auto w-full max-w-screen-sm py-2">
+          <div className="mx-auto w-full py-2">
             {items.map((item) => (
               <div
                 key={item}
-                className="px-4 py-1 text-sm transition-colors hover:bg-gray-100"
+                className="hover:bg-gray-2 px-4 py-1 text-sm transition-colors"
               >
                 {item}
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </Inset>
+      </Card>
     </div>
   );
 };
