@@ -1,4 +1,4 @@
-import useScrollShadow2 from "@/hooks/use-scroll-shadow-2";
+import ScrollShadows from "@/components/scroll-shadows";
 import { cn } from "@/lib/utils";
 import { Card, Inset, Switch, Text } from "@radix-ui/themes";
 import React from "react";
@@ -7,14 +7,7 @@ const ScrollShadowDemo: React.FC = () => {
   const listRef = React.useRef<HTMLDivElement>(null);
   const [isOverflowing, setIsOverflowing] = React.useState(false);
 
-  const { bottomOverflowing, topOverflowing } = useScrollShadow2(listRef);
-
   const items = Array.from({ length: isOverflowing ? 100 : 10 }, (_, i) => i);
-
-  React.useEffect(() => {
-    console.log("topOverflowing", topOverflowing);
-    console.log("bottomOverflowing", bottomOverflowing);
-  }, [topOverflowing, bottomOverflowing]);
 
   return (
     <div className="grid w-full max-w-screen-sm gap-2">
@@ -27,16 +20,10 @@ const ScrollShadowDemo: React.FC = () => {
         <Switch checked={isOverflowing} onCheckedChange={setIsOverflowing} />
         Overflowing list
       </Text>
-      <Card>
-        <Inset
-          ref={listRef}
-          className={cn(
-            "relative h-[40rem] overflow-auto",
-            topOverflowing && "border-t-4",
-            bottomOverflowing && "border-b-4",
-          )}
-        >
-          <div className="mx-auto w-full py-2">
+      <Card className="relative">
+        <ScrollShadows containerRef={listRef} />
+        <Inset ref={listRef} className={cn("h-[40rem] overflow-auto")}>
+          <div className="mx-auto w-full">
             {items.map((item) => (
               <div
                 key={item}
