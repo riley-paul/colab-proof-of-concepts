@@ -6,7 +6,14 @@ import { useAtom } from "jotai";
 import { isMultiSelectModeAtom, selectionAtom } from "./store";
 import useScrollShadow from "@/hooks/use-scroll-shadow";
 import useSelection from "@/hooks/use-selection";
-import { Card, Heading, IconButton, Text, Tooltip } from "@radix-ui/themes";
+import {
+  Card,
+  Heading,
+  IconButton,
+  Inset,
+  Text,
+  Tooltip,
+} from "@radix-ui/themes";
 import RadixProvider from "@/components/radix-provider";
 
 const DriveDemo: React.FC = () => {
@@ -18,22 +25,17 @@ const DriveDemo: React.FC = () => {
 
   return (
     <RadixProvider style={{ minHeight: "auto" }}>
-      <Card size="3">
-        <header
-          className={cn(
-            "transitional-colors border-b border-transparent ease-in-out",
-            isScrolled && "border-border",
-          )}
-        >
+      <Card size="3" className="max-w-screen-sm">
+        <header className={"grid gap-2 pb-12"}>
           <div className="flex items-center justify-between">
-            <Heading className="text-2xl font-bold">
+            <Heading size="4">
               <i className="fa-solid fa-hdd mr-3" />
               <span>Drive</span>
             </Heading>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground">
+              <Text size="1" color="gray">
                 {selection.size} items selected
-              </span>
+              </Text>
               <Tooltip content="Toggle multi-select mode" side="right">
                 <IconButton
                   variant={isMultiSelectMode ? "solid" : "soft"}
@@ -47,15 +49,15 @@ const DriveDemo: React.FC = () => {
               </Tooltip>
             </div>
           </div>
-          <Text>
+          <Text size="2" color="gray">
             Mockup of Drive using Pragmatic Drag and Drop library. Try dragging
             an item onto another item to change it's parent, or move multiple
             items at a time using multi-select mode.
           </Text>
         </header>
-        <div ref={listRef} className="grid max-h-[30rem] overflow-auto px-3">
+        <Inset ref={listRef} className="grid max-h-[30rem] overflow-auto px-3">
           <DrivePragmaticItems />
-        </div>
+        </Inset>
       </Card>
     </RadixProvider>
   );

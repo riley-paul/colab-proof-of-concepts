@@ -1,6 +1,5 @@
 import type { FlatItem } from "@/features/drive/types";
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
 
 import {
@@ -23,6 +22,8 @@ import {
   selectionAtom,
 } from "../../store";
 import useSelection from "@/hooks/use-selection";
+import { Checkbox, Portal } from "@radix-ui/themes";
+import RadixProvider from "@/components/radix-provider";
 
 type Props = {
   item: FlatItem;
@@ -120,11 +121,11 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
         ref={ref}
         data-id={item.id}
         className={cn(
-          "flex h-10 items-center rounded-md border border-transparent px-3 text-sm transition-all ease-out hover:bg-muted",
-          isSelected(item.id) && "border-primary bg-secondary font-semibold",
+          "rounded-2 text-2 hover:bg-gray-2 flex h-10 cursor-pointer items-center border border-transparent px-3 transition-all ease-out",
+          isSelected(item.id) && "border-accent-10 bg-accent-2 font-medium",
           draggableStateClasses[draggableState.type],
           isSelected(item.id) && isDragging && "opacity-40",
-          isChildOfSelected && showCheckbox && "bg-secondary/80",
+          isChildOfSelected && showCheckbox && "bg-accent-1",
         )}
         onClick={() => select?.(item.id)}
       >
@@ -134,30 +135,31 @@ const DrivePragmaticItem: React.FC<Props> = (props) => {
             showCheckbox && "w-7 opacity-100",
           )}
         >
-          <Checkbox checked={isSelected(item.id)} />
+          <Checkbox checked={isSelected(item.id)} size="2" />
         </div>
 
         <span
-          className="mr-2"
+          className="mr-1"
           style={{ paddingLeft: `${item.depth * 1.5}rem` }}
         >
           <i
-            className="fa-solid fa-file text-lg"
+            className="fa-solid fa-file text-3 size-4"
             style={{ color: item.color }}
           />
         </span>
 
         <span>{item.name}</span>
       </div>
-      {draggableState.type === "preview"
-        ? createPortal(
+      {draggableState.type === "preview" ? (
+        <Portal container={draggableState.container}>
+          <RadixProvider>
             <DriveItemDragOverlay
               itemName={item.name}
               selectionCount={Math.max(selection.size, 1)}
-            />,
-            draggableState.container,
-          )
-        : null}
+            />
+          </RadixProvider>
+        </Portal>
+      ) : null}
     </>
   );
 };
