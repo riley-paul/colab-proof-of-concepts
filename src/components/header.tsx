@@ -2,7 +2,13 @@ import { cn } from "@/lib/utils";
 import { Button, TabNav } from "@radix-ui/themes";
 import React from "react";
 
-const links = [
+type Link = {
+  href: string;
+  text: string;
+  icon: string;
+};
+
+const links: Link[] = [
   {
     href: "/",
     text: "Home",
@@ -13,15 +19,20 @@ const links = [
     text: "Drive",
     icon: "fa-solid fa-hdd",
   },
+  {
+    href: "/badges",
+    text: "File Overlay",
+    icon: "fa-solid fa-file",
+  },
 ];
 
 const Header: React.FC<{ pathname: string }> = ({ pathname }) => {
   return (
-    <header className="flex w-full items-center justify-between px-4 border-b">
+    <header className="flex w-full items-center justify-between border-b px-4">
       <TabNav.Root>
         {links.map((link) => (
           <TabNav.Link href={link.href} active={link.href === pathname}>
-            <i className={cn("mr-3", link.icon)} />
+            <i className={cn("text-gray-11 mr-3", link.icon)} />
             {link.text}
           </TabNav.Link>
         ))}

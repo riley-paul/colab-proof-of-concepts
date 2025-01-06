@@ -1,10 +1,15 @@
 ---
 import DriveItemDragOverlay from "@/features/drive/components/drive-item-drag-overlay";
-import RootLayout from "@/layouts/root-layout.astro";
+import HeaderLayout from "@/layouts/header-layout.astro";
 ---
 
-<RootLayout>
-  <div class="flex flex-wrap gap-1 p-10">
+<HeaderLayout>
+  <div class="flex flex-wrap gap-4 p-10">
     <DriveItemDragOverlay itemName="File Name" selectionCount={4} />
+    <DriveItemDragOverlay itemName="Short" selectionCount={4} />
+    <DriveItemDragOverlay
+      itemName="This is a really really long filename"
+      selectionCount={4}
+    />
   </div>
-</RootLayout>
+</HeaderLayout>
