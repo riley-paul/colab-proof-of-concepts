@@ -4,7 +4,11 @@ import Header from "@/components/header";
 ---
 
 <RootLayout>
-  <Header client:load pathname={Astro.url.pathname} />
+  <div class="grid h-screen grid-rows-[auto_1fr]">
+    <Header client:load pathname={Astro.url.pathname} />
 
-  <slot />
+    <div class="flex items-center justify-center bg-gray-2">
+      <slot />
+    </div>
+  </div>
 </RootLayout>
