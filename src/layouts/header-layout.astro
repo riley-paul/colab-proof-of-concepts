@@ -1,61 +1,10 @@
 ---
-import "@/globals.css";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-
-import "@fontsource-variable/radio-canada";
-import "@fontsource-variable/reddit-sans";
 import RootLayout from "./root-layout.astro";
-
-const links = [
-  {
-    href: "/",
-    text: "Home",
-    icon: "fa-solid fa-home",
-  },
-  {
-    href: "/drive",
-    text: "Drive",
-    icon: "fa-solid fa-hdd",
-  },
-];
+import Header from "@/components/header";
 ---
 
 <RootLayout>
-  <header
-    class="bg-black text-white px-4 py-2 flex items-center justify-between w-full"
-  >
-    <div class="gap-2 flex items-center">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            class={cn(
-              buttonVariants({
-                variant:
-                  Astro.url.pathname === link.href
-                    ? "default"
-                    : "invertedGhost",
-                size: "sm",
-              })
-            )}
-          >
-            <i class={cn(link.icon, "mr-2 text-sm")} />
-            <span>{link.text}</span>
-          </a>
-        ))
-      }
-    </div>
-    <a
-      href="https://github.com/rjp301/colab-proof-of-concepts"
-      rel="noopener noreferrer"
-      target="_blank"
-      class={cn(buttonVariants({ variant: "ghost", size: "sm" }), "font-mono")}
-    >
-      <i class="fa-brands fa-github mr-2 text-sm"></i>
-      <span>GitHub</span>
-    </a>
-  </header>
+  <Header client:load pathname={Astro.url.pathname} />
 
   <slot />
 </RootLayout>

@@ -1,13 +1,6 @@
 ---
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import RootLayout from "@/layouts/root-layout.astro";
+import { Badge, Card, Heading, Text } from "@radix-ui/themes";
 
 const data = [
   {
@@ -27,49 +20,49 @@ const data = [
 ---
 
 <RootLayout>
-  <div class="bg-blue-200 h-screen w-full flex items-center justify-center">
-    <div class="flex flex-col gap-12 items-center border p-12 border-red-500">
-      <Card>
-        <CardHeader>
-          <CardTitle>Dual Truncation</CardTitle>
-          <CardDescription> Max width set on secondary badge </CardDescription>
-        </CardHeader>
-        <CardContent className="max-w-screen-sm w-full flex flex-col divide-y">
+  <div class="bg-blue-2 h-screen w-full flex items-center justify-center">
+    <div class="flex flex-col gap-12 items-center border p-12 border-red-6">
+      <Card size="3">
+        <header>
+          <Heading>Dual Truncation</Heading>
+          <Text> Max width set on secondary badge </Text>
+        </header>
+        <div class="max-w-screen-sm w-full flex flex-col divide-y">
           {
             data.map((item) => (
               <div class="flex items-center gap-2 py-2">
-                <Badge variant="default" className="min-w-0">
+                <Badge variant="solid" className="min-w-0">
                   <span class="truncate">{item.name}</span>
                 </Badge>
-                <Badge variant="secondary" className="min-w-0 max-w-md">
+                <Badge variant="soft" className="min-w-0 max-w-md">
                   <span class="truncate">{item.value}</span>
                 </Badge>
               </div>
             ))
           }
-        </CardContent>
+        </div>
       </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Dual Truncation</CardTitle>
-          <CardDescription>
+      <Card size="3">
+        <header>
+          <Heading>Dual Truncation</Heading>
+          <Text>
             No max widths set - primary badge is needlessly truncated
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="max-w-screen-sm w-full flex flex-col divide-y">
+          </Text>
+        </header>
+        <div class="max-w-screen-sm w-full flex flex-col divide-y">
           {
             data.map((item) => (
               <div class="flex items-center gap-2 py-2">
-                <Badge variant="default" className="min-w-0">
+                <Badge variant="solid" className="min-w-0">
                   <span class="truncate">{item.name}</span>
                 </Badge>
-                <Badge variant="secondary" className="min-w-0">
+                <Badge variant="soft" className="min-w-0">
                   <span class="truncate">{item.value}</span>
                 </Badge>
               </div>
             ))
           }
-        </CardContent>
+        </div>
       </Card>
     </div>
   </div>

@@ -8,9 +8,6 @@
   * {
     @apply border-gray-7;
   }
-  body {
-    @apply min-h-screen;
-  }
 
   .container2 {
     @apply mx-auto w-full max-w-screen-md px-4;
