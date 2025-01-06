@@ -1,81 +1,15 @@
-@tailwind base;
+@import "tailwindcss/base";
+@import "@radix-ui/themes/styles.css";
+
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: light;
-    --background: 240 8% 97%;
-    --foreground: 240 8% 5%;
-
-    --card: 0 0% 98%;
-    --card-foreground: 240 8% 5%;
-
-    --popover: 240 8% 97%;
-    --popover-foreground: 240 8% 5%;
-
-    --primary: 233 78% 55%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 6% 93%;
-    --secondary-foreground: 240 8% 5%;
-
-    --muted: 240 6% 93%;
-    --muted-foreground: 236 6% 45%;
-
-    --accent: 240 6% 93%;
-    --accent-foreground: 240 8% 5%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 6% 90%;
-    --input: 230 7% 82%;
-    --ring: 233 24% 74%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    :root {
-      color-scheme: dark;
-      --background: 240 7% 8%;
-      --foreground: 180 9% 98%;
-
-      --card: 240 6% 10%;
-      --card-foreground: 180 9% 98%;
-
-      --popover: 240 6% 10%;
-      --popover-foreground: 180 9% 98%;
-
-      --primary: 233 78% 55%;
-      --primary-foreground: 180 9% 98%;
-
-      --secondary: 233 8% 19%;
-      --secondary-foreground: 180 9% 98%;
-
-      --muted: 235 7% 29%;
-      --muted-foreground: 234 8% 49%;
-
-      --accent: 233 71% 19%;
-      --accent-foreground: 180 9% 98%;
-
-      --destructive: 0 84% 60%;
-      --destructive-foreground: 0 0% 98%;
-
-      --border: 228 20% 16%;
-      --input: 232 9% 18%;
-      --ring: 233 78% 40%;
-    }
-  }
-}
-
-@layer base {
   * {
-    @apply border-border;
+    @apply border-gray-7;
   }
   body {
-    @apply min-h-screen bg-background text-foreground;
+    @apply min-h-screen;
   }
 
   .container2 {
