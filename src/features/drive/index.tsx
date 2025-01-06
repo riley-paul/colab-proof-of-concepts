@@ -11,6 +11,7 @@ import {
   Heading,
   IconButton,
   Inset,
+  Separator,
   Text,
   Tooltip,
 } from "@radix-ui/themes";

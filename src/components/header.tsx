@@ -24,6 +24,11 @@ const links: Link[] = [
     text: "File Overlay",
     icon: "fa-solid fa-file",
   },
+  {
+    href: "/scroll-shadow",
+    text: "Scroll Shadow",
+    icon: "fa-solid fa-scroll",
+  },
 ];
 
 const Header: React.FC<{ pathname: string }> = ({ pathname }) => {

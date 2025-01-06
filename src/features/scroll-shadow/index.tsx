@@ -1,8 +1,6 @@
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import useScrollShadow2 from "@/hooks/use-scroll-shadow-2";
 import { cn } from "@/lib/utils";
+import { Switch, Text } from "@radix-ui/themes";
 import React from "react";
 
 const ScrollShadowDemo: React.FC = () => {
@@ -21,10 +19,15 @@ const ScrollShadowDemo: React.FC = () => {
   return (
     <div className="flex h-screen items-center justify-center bg-sky-100">
       <div className="grid w-full max-w-screen-sm gap-2">
-        <div className="flex items-center gap-2">
+        <Text
+          as="label"
+          className="flex items-center gap-2"
+          size="2"
+          weight="medium"
+        >
           <Switch checked={isOverflowing} onCheckedChange={setIsOverflowing} />
-          <Label>Overflowing list</Label>
-        </div>
+          Overflowing list
+        </Text>
         <div
           ref={listRef}
           className={cn(
